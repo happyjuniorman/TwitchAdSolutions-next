@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name         TwitchAdSolutions (vaft)
 // @namespace    https://github.com/happyjuniorman/TwitchAdSolutions-next
-// @version      37.0.0
+// @version      38.0.0
 // @description  Multiple solutions for blocking Twitch ads (vaft)
 // @updateURL    https://raw.githubusercontent.com/happyjuniorman/TwitchAdSolutions-next/refs/heads/master/vaft/vaft.user.js
 // @downloadURL  https://raw.githubusercontent.com/happyjuniorman/TwitchAdSolutions-next/refs/heads/master/vaft/vaft.user.js
-// @author       https://github.com/cleanlock/VideoAdBlockForTwitch#credits
+// @author       https://github.com/happyjuniorman
 // @match        *://*.twitch.tv/*
 // @run-at       document-start
 // @inject-into  page
