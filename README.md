@@ -16,7 +16,6 @@ Userscript managers:
 
 - https://violentmonkey.github.io/
 - https://www.tampermonkey.net/
-- https://apps.apple.com/us/app/userscripts/id1463298887
 
 *Greasemonkey doesn't work with the scripts.*
 
