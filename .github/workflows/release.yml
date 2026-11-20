@@ -17,12 +17,10 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v7
 
     - name: Set up Git user
-      run: |
-        git config user.name "github-actions[bot]"
-        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      run: git config --global user.email "JohnDoe@example.com" && git config --global user.name "JohnDoe"
 
     - name: Set release notes
       id: set-notes
