@@ -588,11 +588,39 @@
                     console.log(`Blocking${(streamInfo.IsMidroll ? ' midroll ' : ' ')}ads (${backupPlayerType})`);
                 }
             }
-            // TODO: Improve hevc stripping. It should always strip when there is a codec mismatch (both ways)
-            const stripHevc = isHevc && streamInfo.ModifiedM3U8;
-            if (IsAdStrippingEnabled || stripHevc) {
-                textStr = stripAdSegments(textStr, stripHevc, streamInfo);
+// Detect codec mismatch between the currently-playing rendition and the
+// backup we just selected.  When the codecs differ the player cannot
+// seamlessly switch; force a full strip so we never feed it the wrong
+// codec family.
+let forceStripForCodecMismatch = false;
+if (backupM3u8 && currentResolution) {
+    const backupLines = backupM3u8.replaceAll('\r', '').split('\n');
+    for (let i = 0; i < backupLines.length - 1; i++) {
+        if (backupLines[i].startsWith('#EXT-X-STREAM-INF') &&
+            backupLines[i + 1].includes('.m3u8')) {
+            const attrs = parseAttributes(backupLines[i]);
+            if (attrs.RESOLUTION === currentResolution.Resolution) {
+                const backupCodecs = (attrs.CODECS || '').toLowerCase();
+                const currentCodecs = (currentResolution.Codecs || '').toLowerCase();
+                const currentIsEnhanced = currentCodecs.startsWith('hev') ||
+                                          currentCodecs.startsWith('hvc') ||
+                                          currentCodecs.startsWith('av01');
+                const backupIsEnhanced = backupCodecs.startsWith('hev') ||
+                                         backupCodecs.startsWith('hvc') ||
+                                         backupCodecs.startsWith('av01');
+                if (currentIsEnhanced !== backupIsEnhanced) {
+                    forceStripForCodecMismatch = true;
+                }
+                break;
             }
+        }
+    }
+}
+
+const stripForCodec = (isHevc && streamInfo.ModifiedM3U8) || forceStripForCodecMismatch;
+if (IsAdStrippingEnabled || stripForCodec) {
+    textStr = stripAdSegments(textStr, stripForCodec, streamInfo);
+}
         } else if (streamInfo.IsShowingAd) {
             console.log('Finished blocking ads');
             streamInfo.IsShowingAd = false;
