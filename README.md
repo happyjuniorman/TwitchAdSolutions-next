@@ -8,6 +8,10 @@ This repo aims to provide multiple solutions for blocking Twitch ads.
   - Attempts to get a clean stream as fast as it can
   - If it fails to get a clean stream it removes ad segments (no playback until ad-free stream is found)
 
+- video-swap-new - [userscript](https://raw.githubusercontent.com/happyjuniorman/TwitchAdSolutions-next/refs/heads/master/video-swap-new/video-swap-new.user.js)
+  - Attempts to get a clean stream
+  - If it fails to get a clean stream it removes ad segments (no playback until ad-free stream is found)
+
 ## Applying a script (userscript)
 
 Viewing one of the userscript files should prompt the given script to be added when you have a userscript manager installed.
